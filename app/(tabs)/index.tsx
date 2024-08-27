@@ -1,6 +1,4 @@
-import { Image, StyleSheet } from "react-native";
-
-import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { Text } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -20,7 +18,12 @@ function HomeScreen() {
     // </ParallaxScrollView>
     <SafeAreaView className="h-screen flex-1">
       <ThemedView>
-        <ThemedText>Hi</ThemedText>
+        <ThemedText className="text-4xl text-teal-500 font-JakartaBold">
+          H1i
+        </ThemedText>
+        <Text className="text-4xl text-white font-JakartaExtraBold">
+          This is{" "}
+        </Text>
       </ThemedView>
     </SafeAreaView>
   );

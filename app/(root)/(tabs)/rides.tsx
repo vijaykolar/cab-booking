@@ -3,7 +3,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-function HomeScreen() {
+function Rides() {
   return (
     // <ParallaxScrollView
     //   headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
@@ -21,7 +21,7 @@ function HomeScreen() {
         <ThemedText className="text-4xl text-teal-500 font-JakartaBold">
           H1i
         </ThemedText>
-        <Text className="text-4xl text-white font-JakartaExtraBold">
+        <Text className="text-4xl text-cyan-300 font-JakartaExtraBold">
           This is{" "}
         </Text>
       </ThemedView>
@@ -29,4 +29,4 @@ function HomeScreen() {
   );
 }
 
-export default HomeScreen;
+export default Rides;

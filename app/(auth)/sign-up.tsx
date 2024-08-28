@@ -12,6 +12,7 @@ import { useRouter } from "expo-router";
 import ReactNativeModal from "react-native-modal";
 import { ROUTES } from "@/constants/routes";
 import { ThemedView } from "@/components/ThemedView";
+import { fetchAPI } from "@/lib/fetch";
 
 function SignUp() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -62,6 +63,14 @@ function SignUp() {
 
       if (completeSignUp.status === "complete") {
         // TODO - Create DB users
+        await fetchAPI("/(api)/user", {
+          method: "POST",
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            clerkId: completeSignUp.createdUserId,
+          }),
+        });
         await setActive({ session: completeSignUp.createdSessionId });
         setVerification({ ...verification, state: "success" });
         // router.replace("/");

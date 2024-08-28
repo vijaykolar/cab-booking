@@ -1,23 +1,48 @@
-import { Image, ScrollView, Text, View } from "react-native";
+import { Alert, Image, ScrollView, Text, View } from "react-native";
 import InputField from "@/components/InputField";
 import { StatusBar } from "expo-status-bar";
 import { icons, images } from "@/constants";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import ThemedButton from "@/components/ThemedButton";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import OAuth from "@/components/OAuth";
+import { useSignIn } from "@clerk/clerk-expo";
 
 function SignIn() {
+  const { signIn, setActive, isLoaded } = useSignIn();
+  const router = useRouter();
+
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-  const onSignInPress = () => {
-    console.log(1);
-    console.log(form);
-  };
+  const onSignInPress = useCallback(async () => {
+    if (!isLoaded) {
+      return;
+    }
+
+    try {
+      const signInAttempt = await signIn.create({
+        identifier: form.email,
+        password: form.password,
+      });
+
+      if (signInAttempt.status === "complete") {
+        await setActive({ session: signInAttempt.createdSessionId });
+        router.replace("/");
+      } else {
+        // See https://clerk.com/docs/custom-flows/error-handling
+        // for more info on error handling
+        console.error(JSON.stringify(signInAttempt, null, 2));
+        Alert.alert("Error", "Something went wrong");
+      }
+    } catch (err: any) {
+      console.error(JSON.stringify(err, null, 2));
+      Alert.alert("Error", err.errors[0].longMessage);
+    }
+  }, [isLoaded, form.email, form.password]);
   return (
     <ScrollView className="flex-1 bg-white dark:bg-black">
       <View className="flex-1">

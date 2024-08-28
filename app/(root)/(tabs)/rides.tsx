@@ -22,7 +22,7 @@ function Rides() {
           H1i
         </ThemedText>
         <Text className="text-4xl text-cyan-300 font-JakartaExtraBold">
-          This is{" "}
+          This is rides
         </Text>
       </ThemedView>
     </SafeAreaView>

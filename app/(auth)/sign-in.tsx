@@ -63,6 +63,7 @@ function SignIn() {
             icon={icons.email}
             value={form.email}
             onChangeText={(value) => setForm({ ...form, email: value })}
+            keyboardType="email-address"
           />
           <InputField
             label="Password"

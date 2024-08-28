@@ -6,6 +6,9 @@ const ROUTES = {
     SIGN_IN: "/(auth)/sign-in" as Href<string>,
     SIGN_UP: "/(auth)/sign-up" as Href<string>,
   },
+  TABS: {
+    HOME: "/(root)/(tabs)/home" as Href<string>,
+  },
 };
 
 export { ROUTES };

@@ -22,7 +22,7 @@ function Chat() {
           H1i
         </ThemedText>
         <Text className="text-4xl text-cyan-300 font-JakartaExtraBold">
-          This is{" "}
+          This is chat
         </Text>
       </ThemedView>
     </SafeAreaView>

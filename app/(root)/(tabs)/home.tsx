@@ -1,3 +1,5 @@
+import { GoogleTextInput } from "@/components/GoogleTextInput";
+import { Map } from "@/components/Map";
 import { RideCard } from "@/components/RideCard";
 import { ThemedText } from "@/components/ThemedText";
 import { icons, images } from "@/constants";
@@ -126,6 +128,8 @@ export default function Page() {
 
   const loading = false;
 
+  const handleDestinationPress = () => {};
+
   return (
     <SafeAreaView className="bg-general-500">
       <FlatList
@@ -167,18 +171,18 @@ export default function Page() {
               </TouchableOpacity>
             </View>
 
-            {/* <GoogleTextInput
+            <GoogleTextInput
               icon={icons.search}
               containerStyle="bg-white shadow-md shadow-neutral-300"
               handlePress={handleDestinationPress}
-            /> */}
+            />
 
             <>
               <Text className="text-xl font-JakartaBold mt-5 mb-3">
                 Your current location
               </Text>
               <View className="flex flex-row items-center bg-transparent h-[300px]">
-                {/* <Map /> */}
+                <Map />
               </View>
             </>
 

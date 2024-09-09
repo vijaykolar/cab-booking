@@ -3,9 +3,13 @@ import { Map } from "@/components/Map";
 import { RideCard } from "@/components/RideCard";
 import { ThemedText } from "@/components/ThemedText";
 import { icons, images } from "@/constants";
+import { useLocationStore } from "@/store";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
+import * as Location from "expo-location";
+
 import {
   ActivityIndicator,
   FlatList,
@@ -124,7 +128,33 @@ const rides = [
 ];
 
 export default function Page() {
+  const { setUserLocation, setDestinationLocation } = useLocationStore();
   const { user } = useUser();
+
+  const [hasPermissions, setHasPermissions] = useState(false);
+
+  useEffect(() => {
+    const requestLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setHasPermissions(false);
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync();
+      const address = await Location.reverseGeocodeAsync({
+        latitude: location.coords?.latitude,
+        longitude: location.coords?.longitude,
+      });
+
+      setUserLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        address: `${address[0].name}, ${address[0].region}`,
+      });
+    };
+    requestLocation();
+  }, []);
 
   const loading = false;
 
@@ -133,8 +163,8 @@ export default function Page() {
   return (
     <SafeAreaView className="bg-general-500">
       <FlatList
-        // data={rides.slice(0, 5)}
-        data={[]}
+        data={rides.slice(0, 5)}
+        // data={[]}
         keyExtractor={(item) => item.ride_id}
         renderItem={({ item }) => <RideCard ride={item} />}
         className="px-4"

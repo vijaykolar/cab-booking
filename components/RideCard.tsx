@@ -5,8 +5,6 @@ import { icons, images } from "@/constants";
 import { formatDate, formatTime } from "@/lib/utils";
 
 function RideCard({ ride }: { ride: Ride }) {
-  console.log(process.env.EXPO_PUBLIC_GEOAPIFY_API_KEY);
-
   const {
     destination_address,
     destination_latitude,
@@ -20,7 +18,6 @@ function RideCard({ ride }: { ride: Ride }) {
     fare_price,
     payment_status,
     ride_time,
-    user_email,
   } = ride;
   return (
     <View className="flex flex-row items-center justify-center bg-white rounded-lg shadow-sm shadow-neutral-300 mb-3">

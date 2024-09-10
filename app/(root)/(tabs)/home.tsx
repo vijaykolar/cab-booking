@@ -5,7 +5,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { icons, images } from "@/constants";
 import { useLocationStore } from "@/store";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import * as Location from "expo-location";
@@ -19,6 +19,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ROUTES } from "@/constants/routes";
 
 const rides = [
   {
@@ -158,7 +159,14 @@ export default function Page() {
 
   const loading = false;
 
-  const handleDestinationPress = () => {};
+  const handleDestinationPress = (location: {
+    latitude: number;
+    longitude: number;
+    address: string;
+  }) => {
+    setDestinationLocation(location);
+    router.push(ROUTES.ROOT.FIND_RIDE);
+  };
 
   return (
     <SafeAreaView className="bg-general-500">

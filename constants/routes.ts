@@ -9,6 +9,9 @@ const ROUTES = {
   TABS: {
     HOME: "/(root)/(tabs)/home" as Href<string>,
   },
+  ROOT: {
+    FIND_RIDE: "/(root)/find-ride" as Href<string>,
+  },
 };
 
 export { ROUTES };

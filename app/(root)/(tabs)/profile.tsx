@@ -1,32 +1,71 @@
-import { Text } from "react-native";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
+import { useUser } from "@clerk/clerk-expo";
+import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-function Profile() {
+import InputField from "@/components/InputField";
+import { ThemedView } from "@/components/ThemedView";
+
+const Profile = () => {
+  const { user } = useUser();
+
   return (
-    // <ParallaxScrollView
-    //   headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-    //   headerImage={
-    //     <Image
-    //       source={require("@/assets/images/partial-react-logo.png")}
-    //       style={styles.reactLogo}
-    //     />
-    //   }
-    // >
-    //   <ThemedText>1</ThemedText>
-    // </ParallaxScrollView>
-    <SafeAreaView className="h-screen flex-1">
-      <ThemedView>
-        <ThemedText className="text-4xl text-teal-500 font-JakartaBold">
-          H1i
-        </ThemedText>
-        <Text className="text-4xl text-cyan-300 font-JakartaExtraBold">
-          This is profile
-        </Text>
-      </ThemedView>
+    <SafeAreaView className="flex-1">
+      <ScrollView
+        className="px-5"
+        contentContainerStyle={{ paddingBottom: 120 }}
+      >
+        <Text className="text-2xl font-JakartaBold my-5">My profile</Text>
+
+        <View className="flex items-center justify-center my-5">
+          <Image
+            source={{
+              uri: user?.externalAccounts[0]?.imageUrl ?? user?.imageUrl,
+            }}
+            style={{ width: 110, height: 110, borderRadius: 110 / 2 }}
+            className=" rounded-full h-[110px] w-[110px] border-[3px] border-white shadow-sm shadow-neutral-300"
+          />
+        </View>
+
+        <ThemedView className="flex flex-col items-start justify-center rounded-lg shadow-sm shadow-neutral-300 dark:shadow-neutral-800 px-5 py-3">
+          <View className="flex flex-col items-start justify-start w-full">
+            <InputField
+              label="First name"
+              placeholder={user?.firstName || "Not Found"}
+              containerStyle="w-full"
+              inputStyle="p-3.5"
+              editable={false}
+            />
+
+            <InputField
+              label="Last name"
+              placeholder={user?.lastName || "Not Found"}
+              containerStyle="w-full"
+              inputStyle="p-3.5"
+              editable={false}
+            />
+
+            <InputField
+              label="Email"
+              placeholder={
+                user?.primaryEmailAddress?.emailAddress || "Not Found"
+              }
+              containerStyle="w-full"
+              inputStyle="p-3.5"
+              editable={false}
+            />
+
+            <InputField
+              label="Phone"
+              placeholder={user?.primaryPhoneNumber?.phoneNumber || "Not Found"}
+              containerStyle="w-full"
+              inputStyle="p-3.5"
+              editable={false}
+            />
+          </View>
+        </ThemedView>
+      </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 export default Profile;

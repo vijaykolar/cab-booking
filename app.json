@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0286FF"
+      "backgroundColor": "#2F80ED"
     },
     "ios": {
       "supportsTablet": true
@@ -27,7 +27,12 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      ["expo-router", { "origin": "https://uber.com/" }]
+      [
+        "expo-router",
+        {
+          "origin": "https://uber.dev/"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

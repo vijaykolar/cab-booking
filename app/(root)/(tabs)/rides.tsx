@@ -1,32 +1,57 @@
-import { Text } from "react-native";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
+import { useUser } from "@clerk/clerk-expo";
+import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-function Rides() {
+import { RideCard } from "@/components/RideCard";
+import { images } from "@/constants";
+import { useFetch } from "@/lib/fetch";
+import { Ride } from "@/types/type";
+
+const Rides = () => {
+  const { user } = useUser();
+
+  const {
+    data: recentRides,
+    loading,
+    error,
+  } = useFetch<Ride[]>(`/(api)/ride/${user?.id}`);
+
   return (
-    // <ParallaxScrollView
-    //   headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-    //   headerImage={
-    //     <Image
-    //       source={require("@/assets/images/partial-react-logo.png")}
-    //       style={styles.reactLogo}
-    //     />
-    //   }
-    // >
-    //   <ThemedText>1</ThemedText>
-    // </ParallaxScrollView>
-    <SafeAreaView className="h-screen flex-1">
-      <ThemedView>
-        <ThemedText className="text-4xl text-teal-500 font-JakartaBold">
-          H1i
-        </ThemedText>
-        <Text className="text-4xl text-cyan-300 font-JakartaExtraBold">
-          This is rides
-        </Text>
-      </ThemedView>
+    <SafeAreaView className="flex-1 bg-white">
+      <FlatList
+        data={recentRides}
+        renderItem={({ item }) => <RideCard ride={item} />}
+        keyExtractor={(item, index) => index.toString()}
+        className="px-5"
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{
+          paddingBottom: 100,
+        }}
+        ListEmptyComponent={() => (
+          <View className="flex flex-col items-center justify-center">
+            {!loading ? (
+              <>
+                <Image
+                  source={images.noResult}
+                  className="w-40 h-40"
+                  alt="No recent rides found"
+                  resizeMode="contain"
+                />
+                <Text className="text-sm">No recent rides found</Text>
+              </>
+            ) : (
+              <ActivityIndicator size="small" color="#000" />
+            )}
+          </View>
+        )}
+        ListHeaderComponent={
+          <>
+            <Text className="text-2xl font-JakartaBold my-5">All Rides</Text>
+          </>
+        }
+      />
     </SafeAreaView>
   );
-}
+};
 
 export default Rides;

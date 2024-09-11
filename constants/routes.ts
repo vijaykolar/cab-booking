@@ -12,6 +12,7 @@ const ROUTES = {
   ROOT: {
     FIND_RIDE: "/(root)/find-ride" as Href<string>,
     CONFIRM_RIDE: "/(root)/confirm-ride" as Href<string>,
+    BOOK_RIDE: "/(root)/book-ride" as Href<string>,
   },
 };
 

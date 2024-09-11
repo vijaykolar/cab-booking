@@ -37,6 +37,7 @@ function SignUp() {
 
     try {
       await signUp.create({
+        username: form.name,
         emailAddress: form.email,
         password: form.password,
       });

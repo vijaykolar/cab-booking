@@ -20,6 +20,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ROUTES } from "@/constants/routes";
+import { ThemedView } from "@/components/ThemedView";
+import { useAuth } from "@clerk/clerk-expo";
 
 const rides = [
   {
@@ -131,7 +133,7 @@ const rides = [
 export default function Page() {
   const { setUserLocation, setDestinationLocation } = useLocationStore();
   const { user } = useUser();
-
+  const { signOut } = useAuth();
   const [hasPermissions, setHasPermissions] = useState(false);
 
   useEffect(() => {
@@ -168,6 +170,11 @@ export default function Page() {
     router.push(ROUTES.ROOT.FIND_RIDE);
   };
 
+  const handleSignOut = async () => {
+    await signOut();
+    router.replace("/(auth)/sign-in");
+  };
+
   return (
     <SafeAreaView className="bg-general-500">
       <FlatList
@@ -198,11 +205,11 @@ export default function Page() {
         ListHeaderComponent={
           <>
             <View className="flex flex-row items-center justify-between my-5">
-              <ThemedText className="text-2xl font-JakartaExtraBold">
+              <Text className="text-2xl font-JakartaExtraBold">
                 Welcome {user?.firstName || "parton"}👋
-              </ThemedText>
+              </Text>
               <TouchableOpacity
-                // onPress={handleSignOut}
+                onPress={handleSignOut}
                 className="justify-center items-center w-10 h-10 rounded-full bg-white"
               >
                 <Image source={icons.out} className="w-4 h-4" />

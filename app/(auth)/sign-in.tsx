@@ -52,9 +52,9 @@ function SignIn() {
             resizeMode="contain"
             className="w-full h-64 z-0"
           />
-          <Text className="absolute bottom-5 left-5 text-2xl font-JakartaBold">
+          <ThemedText className="absolute bottom-5 left-5 text-2xl font-JakartaBold">
             Welcome👋
-          </Text>
+          </ThemedText>
         </View>
         <View className="p-5">
           <InputField
